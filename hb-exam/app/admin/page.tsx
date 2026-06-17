@@ -555,7 +555,7 @@ export default function AdminDashboard() {
                                 ))}
                             </nav>
                             <div className="p-4 border-t border-white/10">
-                                <Button variant="ghost" className="w-full justify-start text-gray-400 hover:text-red-600 hover:bg-red-50 text-sm h-9 px-2" onClick={handleLogout}>
+                                <Button variant="ghost" className="w-full justify-start text-gray-400 hover:text-red-400 hover:bg-red-500/10 text-sm h-9 px-2" onClick={handleLogout}>
                                     <LogOut className="w-4 h-4 mr-3" /> Sign Out
                                 </Button>
                             </div>
@@ -585,7 +585,7 @@ export default function AdminDashboard() {
                     ))}
                 </nav>
                 <div className="p-4 border-t border-white/10">
-                    <Button variant="ghost" className="w-full justify-start text-gray-400 hover:text-red-600 hover:bg-red-50 text-sm h-9 px-2" onClick={handleLogout}>
+                    <Button variant="ghost" className="w-full justify-start text-gray-400 hover:text-red-400 hover:bg-red-500/10 text-sm h-9 px-2" onClick={handleLogout}>
                         <LogOut className="w-4 h-4 mr-3" /> Sign Out
                     </Button>
                 </div>
@@ -809,10 +809,10 @@ export default function AdminDashboard() {
                                             exit={{ opacity: 0, height: 0 }}
                                             className="overflow-hidden"
                                         >
-                                            <div className="p-4 bg-blue-50 border border-blue-100 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4 mb-4">
+                                            <div className="p-4 bg-blue-950/20 border border-blue-900/40 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4 mb-4">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
-                                                        <FileSpreadsheet className="w-5 h-5 text-blue-600" />
+                                                    <div className="w-10 h-10 bg-blue-500/15 rounded-full flex items-center justify-center shrink-0">
+                                                        <FileSpreadsheet className="w-5 h-5 text-blue-400" />
                                                     </div>
                                                     <div>
                                                         <p className="text-sm font-semibold text-gray-100">Export Top Students from {exportCollege}</p>
@@ -820,7 +820,7 @@ export default function AdminDashboard() {
                                                     </div>
                                                 </div>
                                                 <div className="flex items-center gap-2">
-                                                    <div className="flex items-center gap-2 bg-[#0d0d12] border border-blue-200 rounded-lg px-3 h-10">
+                                                    <div className="flex items-center gap-2 bg-[#0d0d12] border border-blue-500/20 rounded-lg px-3 h-10">
                                                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Count</span>
                                                         <input 
                                                             type="number" 
@@ -882,9 +882,9 @@ export default function AdminDashboard() {
                                                     </td>
                                                     <td className="px-6 py-4 font-mono text-xs text-gray-300">{user.rollNo}</td>
                                                     <td className="px-6 py-4">
-                                                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${user.exam_attempts?.[0]?.status === 'completed' ? 'bg-green-50 text-green-700 ring-1 ring-green-600/20' :
-                                                            user.exam_attempts?.[0]?.status === 'terminated' ? 'bg-red-50 text-red-700 ring-1 ring-red-600/20' :
-                                                                'bg-yellow-50 text-yellow-700 ring-1 ring-yellow-600/20'}`}>
+                                                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${user.exam_attempts?.[0]?.status === 'completed' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
+                                                            user.exam_attempts?.[0]?.status === 'terminated' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' :
+                                                                'bg-amber-500/10 text-amber-400 border-amber-500/20'}`}>
                                                             {user.exam_attempts?.[0]?.status || 'Not Started'}
                                                         </span>
                                                     </td>
@@ -896,12 +896,12 @@ export default function AdminDashboard() {
                                                     <td className="px-6 py-4 text-right">
                                                         <div className="flex gap-1 justify-end">
                                                             <Button variant="ghost" size="sm" title="Reset Exam"
-                                                                className="w-8 h-8 p-0 text-gray-400 hover:text-orange-600 hover:bg-orange-50"
+                                                                className="w-8 h-8 p-0 text-gray-400 hover:text-orange-400 hover:bg-orange-500/15"
                                                                 onClick={() => handleResetExam(user._id)}>
                                                                 <RotateCcw className="w-3.5 h-3.5" />
                                                             </Button>
                                                             <Button variant="ghost" size="sm" title="Delete User"
-                                                                className="w-8 h-8 p-0 text-gray-400 hover:text-red-600 hover:bg-red-50"
+                                                                className="w-8 h-8 p-0 text-gray-400 hover:text-red-400 hover:bg-red-500/15"
                                                                 onClick={() => handleDeleteUser(user._id)}>
                                                                 <Trash2 className="w-3.5 h-3.5" />
                                                             </Button>
@@ -1110,13 +1110,13 @@ export default function AdminDashboard() {
 
                                 {/* Left: Question Form */}
                                 <div className="lg:col-span-2">
-                                    <div className="p-5 border border-white/10 rounded-xl bg-[#0d0d12] sticky top-24 space-y-4">
+                                    <div className="p-5 border border-white/10 rounded-xl bg-[#0d0d12] static lg:sticky lg:top-24 space-y-4">
                                         <div>
                                             <div className="flex items-center justify-between mb-1">
                                                 <p className="text-sm font-semibold text-gray-100">
                                                     {editingId ? '✏️ Edit Question' : '+ New Question'}
                                                 </p>
-                                                <span className="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-bold">
+                                                <span className="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded-full font-bold">
                                                     {currentSection}
                                                 </span>
                                             </div>
@@ -1172,7 +1172,7 @@ export default function AdminDashboard() {
                                                 </Button>
                                             )}
 
-                                            <div className="border-t border-slate-100 pt-2">
+                                            <div className="border-t border-white/10 pt-2">
                                                 <Button
                                                     variant="outline"
                                                     onClick={handleNextSection}
@@ -1356,7 +1356,7 @@ function QuestionCard({ q, qIdx, onEdit, onDelete, highlight = false }: {
                             key={idx}
                             className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs ${idx === q.correctOption
                                 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 font-medium'
-                                : 'bg-[#050505] border-slate-100 text-gray-300'}`}
+                                : 'bg-[#050505] border-white/5 text-gray-300'}`}
                         >
                             <span className={`w-4 h-4 rounded text-[9px] font-bold flex items-center justify-center shrink-0 ${idx === q.correctOption ? 'bg-emerald-500 text-white' : 'bg-[#0d0d12] border border-white/10 text-gray-400'}`}>
                                 {String.fromCharCode(65 + idx)}
@@ -1369,11 +1369,11 @@ function QuestionCard({ q, qIdx, onEdit, onDelete, highlight = false }: {
                 {/* Actions */}
                 <div className="flex gap-2 mt-3 ml-7 transition-opacity">
                     <Button variant="outline" size="sm" onClick={onEdit}
-                        className="h-7 px-3 text-xs text-blue-600 border-blue-100 hover:bg-blue-50 bg-[#0d0d12]">
+                        className="h-7 px-3 text-xs text-blue-400 border-blue-500/20 hover:bg-blue-500/10 hover:border-blue-500/40 bg-[#0d0d12]">
                         <PencilLine className="w-3 h-3 mr-1" /> Edit
                     </Button>
                     <Button variant="outline" size="sm" onClick={onDelete}
-                        className="h-7 px-3 text-xs text-rose-600 border-rose-100 hover:bg-rose-50 bg-[#0d0d12]">
+                        className="h-7 px-3 text-xs text-rose-400 border-rose-500/20 hover:bg-rose-500/10 hover:border-rose-500/40 bg-[#0d0d12]">
                         <Trash2 className="w-3 h-3 mr-1" /> Delete
                     </Button>
                 </div>

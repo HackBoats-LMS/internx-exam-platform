@@ -124,6 +124,40 @@ export default function LoginPage() {
           display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
         }
         .ix-btn-red:hover { background: #b91c1c; }
+        .ix-btn-text-desktop { display: inline; }
+        .ix-btn-text-mobile { display: none; }
+
+        /* Footer styling */
+        .ix-footer {
+          position: relative;
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.75rem;
+          padding: 2.5rem 2rem;
+          margin-top: auto;
+          border-top: 1px solid rgba(255,255,255,0.03);
+          width: 100%;
+          box-sizing: border-box;
+          opacity: 0.6;
+          transition: opacity 0.3s;
+        }
+        .ix-footer:hover {
+          opacity: 0.95;
+        }
+        .ix-footer-text {
+          font-size: 0.8rem;
+          color: #9ca3af;
+          font-weight: 500;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        }
+        .ix-footer-logo {
+          height: 26px;
+          width: auto;
+          object-fit: contain;
+        }
 
         /* Hero */
         .ix-hero {
@@ -345,11 +379,39 @@ export default function LoginPage() {
         .ix-f-title { font-size: 1.05rem; font-weight: 600; color: #fff; margin: 0 0 0.5rem; }
         .ix-f-desc { font-size: 0.85rem; color: #9ca3af; line-height: 1.5; margin: 0; }
 
-        @media (max-width: 968px) {
-          .ix-features { grid-template-columns: 1fr 1fr; padding: 2rem; gap: 3rem 2rem; }
+        @media (max-width: 1024px) {
+          .ix-nav { padding: 1.25rem 2rem; }
+          .ix-hero { grid-template-columns: 1fr; gap: 3.5rem; padding: 0 2rem; margin: 3rem auto; }
+          .ix-hero-left { align-items: center; text-align: center; }
+          .ix-subtitle { margin: 0 auto 2.5rem; }
+          .ix-cta-group { justify-content: center; }
+          .ix-trust-badges { justify-content: center; width: 100%; box-sizing: border-box; }
+          .ix-dashboard { transform: rotateY(-4deg) rotateX(1deg) translateZ(0); box-shadow: -10px 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(220,20,40,0.08); }
+          .ix-btn-text-desktop { display: none; }
+          .ix-btn-text-mobile { display: inline; }
         }
-        @media (max-width: 640px) {
-          .ix-features { grid-template-columns: 1fr; }
+
+        @media (max-width: 768px) {
+          .ix-features { grid-template-columns: 1fr 1fr; padding: 2rem; gap: 2.5rem 1.5rem; }
+          .ix-dash-stats { grid-template-columns: repeat(2, 1fr); }
+          .ix-dash-bottom { grid-template-columns: 1fr; }
+          .ix-bg-glow, .ix-bg-lines, .ix-dots { display: none; }
+        }
+
+        @media (max-width: 580px) {
+          .ix-nav { padding: 1rem 1.25rem; }
+          .ix-nav-link { display: none; }
+          .ix-nav-right { gap: 1rem; }
+          .ix-hero { gap: 2.5rem; padding: 0 1.25rem; margin: 2rem auto; }
+          .ix-h1 { font-size: 2.75rem; }
+          .ix-subtitle { font-size: 1rem; margin-bottom: 2rem; }
+          .ix-cta-group { margin-bottom: 2.5rem; width: 100%; }
+          .ix-btn-large { width: 100%; }
+          .ix-trust-badges { flex-direction: column; align-items: center; gap: 0.75rem; padding: 1rem; }
+          .ix-badge-dot { display: none; }
+          .ix-dash-sidebar { display: none; }
+          .ix-dash-main { padding: 1rem; }
+          .ix-features { grid-template-columns: 1fr; padding: 2.5rem 1.5rem; gap: 2rem; }
         }
       `}</style>
 
@@ -364,7 +426,8 @@ export default function LoginPage() {
             <span className="ix-nav-link" onClick={loginGoogle}>Login</span>
             <button className="ix-btn-red" onClick={loginGoogle} disabled={isLoading}>
               {isLoading ? <Loader2 size={16} className="animate-spin" /> : null}
-              Continue with Google
+              <span className="ix-btn-text-desktop">Continue with Google</span>
+              <span className="ix-btn-text-mobile">Get started</span>
             </button>
           </div>
         </nav>
@@ -542,6 +605,11 @@ export default function LoginPage() {
             <p className="ix-f-desc">Manage candidates, roles and permissions with ease.</p>
           </div>
         </div>
+
+        <footer className="ix-footer">
+          <span className="ix-footer-text">Powered by</span>
+          <img src="/hackboats-logo.png" alt="HackBoats" className="ix-footer-logo" />
+        </footer>
       </div>
     </>
   )

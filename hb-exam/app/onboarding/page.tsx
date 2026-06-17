@@ -275,28 +275,34 @@ export default function OnboardingPage() {
                 }
                 .ob-brief-icon {
                     width: 72px; height: 72px;
-                    background: rgba(220,38,38,0.1);
-                    border: 1px solid rgba(220,38,38,0.2);
-                    color: #dc2626;
+                    background: rgba(220,38,38,0.15);
+                    border: 1px solid rgba(220,38,38,0.3);
+                    color: #ef4444;
                     border-radius: 22px;
                     display: flex; align-items: center; justify-content: center;
                     margin: 0 auto 3rem;
-                    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+                    box-shadow: 0 8px 32px rgba(220,38,38,0.25);
                 }
                 .ob-rule-card {
                     display: flex; align-items: center; gap: 2rem;
                     text-align: left; padding: 2.25rem;
                     border-radius: 24px;
-                    background: #0d0d12;
-                    border: 1px solid rgba(255,255,255,0.1);
+                    background: rgba(255,255,255,0.02);
+                    border: 1px solid rgba(255,255,255,0.06);
+                    backdrop-filter: blur(12px);
                     margin-bottom: 1.5rem;
-                    transition: all 0.3s ease;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.3);
                 }
                 @media (max-width: 600px) {
                     .ob-rule-card { padding: 1.25rem; gap: 1rem; }
                 }
-                .ob-rule-card:hover { transform: translateX(8px); border-color: rgba(220,38,38,0.4); box-shadow: 0 12px 24px rgba(0,0,0,0.3); }
+                .ob-rule-card:hover { 
+                    transform: translateX(6px); 
+                    border-color: rgba(220,38,38,0.3); 
+                    background: rgba(220,38,38,0.02);
+                    box-shadow: 0 12px 30px rgba(220,38,38,0.08), 0 0 20px rgba(220,38,38,0.02);
+                }
                 
                 .ob-rule-icon-box {
                     width: 56px; height: 56px; border-radius: 16px;
@@ -500,7 +506,7 @@ export default function OnboardingPage() {
                             <p style={{ color: '#9ca3af', fontSize: 'clamp(1rem, 3.5vw, 1.25rem)', fontWeight: 500, marginBottom: '4rem' }}>Read carefully. There is no going back once you start.</p>
 
                             <div className="ob-rule-card">
-                                <div className="ob-rule-icon-box" style={{ background: '#15151a', color: '#ffffff' }}>
+                                <div className="ob-rule-icon-box" style={{ background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.25)', color: '#10b981' }}>
                                     <CheckCircle2 size={28} strokeWidth={2.5} />
                                 </div>
                                 <div style={{ flex: 1 }}>
@@ -510,7 +516,7 @@ export default function OnboardingPage() {
                             </div>
 
                             <div className="ob-rule-card">
-                                <div className="ob-rule-icon-box" style={{ background: 'rgba(220,38,38,0.1)', color: '#ef4444' }}>
+                                <div className="ob-rule-icon-box" style={{ background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.25)', color: '#ef4444' }}>
                                     <AlertCircle size={28} strokeWidth={2.5} />
                                 </div>
                                 <div style={{ flex: 1 }}>
@@ -520,7 +526,7 @@ export default function OnboardingPage() {
                             </div>
 
                             <div className="ob-rule-card">
-                                <div className="ob-rule-icon-box" style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b' }}>
+                                <div className="ob-rule-icon-box" style={{ background: 'rgba(245, 158, 11, 0.15)', border: '1px solid rgba(245, 158, 11, 0.25)', color: '#f59e0b' }}>
                                     <Timer size={28} strokeWidth={2.5} />
                                 </div>
                                 <div style={{ flex: 1 }}>
