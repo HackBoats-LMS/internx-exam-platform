@@ -259,7 +259,7 @@ export default function QuizPage() {
                                     <button
                                         key={q.id}
                                         onClick={() => { setCurrentIdx(qIdx); setSidebarOpen(false); setShowPalette(false) }}
-                                        className={`w-full aspect-square rounded-md text-xs font-bold transition-all ${qIdx === currentIdx ? 'ring-2 ring-blue-500 ring-offset-1' : ''} ${st === 'answered' ? 'bg-emerald-500 text-white' : st === 'review' ? 'bg-amber-400 text-white' : 'bg-[#15151a] text-gray-400 hover:bg-slate-200'}`}
+                                        className={`w-full aspect-square rounded-md text-xs font-bold transition-all ${qIdx === currentIdx ? 'ring-2 ring-blue-500 ring-offset-1 ring-offset-[#0d0d12]' : ''} ${st === 'answered' ? 'bg-emerald-500 text-white' : st === 'review' ? 'bg-amber-400 text-white' : 'bg-[#15151a] text-gray-400 hover:bg-white/10 hover:text-white'}`}
                                     >
                                         {qIdx + 1}
                                     </button>
@@ -308,7 +308,7 @@ export default function QuizPage() {
 
                 {/* Right: timer + submit */}
                 <div className="flex items-center gap-3">
-                    <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-mono font-bold text-sm ${timeLeft < 300 ? 'bg-red-50 text-red-600 animate-pulse' : timeLeft < 600 ? 'bg-amber-50 text-amber-600' : 'bg-[#050505] text-gray-200'}`}>
+                    <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-mono font-bold text-sm border ${timeLeft < 300 ? 'bg-red-500/10 text-red-400 border-red-500/20 animate-pulse' : timeLeft < 600 ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-[#050505] text-gray-200 border-white/5'}`}>
                         <Timer className="w-4 h-4" />
                         {formatTime(timeLeft)}
                     </div>
@@ -326,7 +326,7 @@ export default function QuizPage() {
 
                 {/* ── DESKTOP SIDEBAR ──────────────────────────────────── */}
                 <aside className="hidden md:flex w-64 lg:w-72 bg-[#0d0d12] border-r border-white/10 flex-col overflow-y-auto shrink-0">
-                    <div className="p-4 border-b border-slate-100">
+                    <div className="p-4 border-b border-white/10">
                         <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Question Navigator</p>
                     </div>
                     <div className="p-4 overflow-y-auto flex-1">
@@ -348,7 +348,7 @@ export default function QuizPage() {
                                 transition={{ type: 'tween', duration: 0.25 }}
                                 className="fixed top-0 left-0 h-full w-72 bg-[#0d0d12] z-50 flex flex-col shadow-2xl md:hidden"
                             >
-                                <div className="p-4 border-b border-slate-100 flex items-center justify-between">
+                                <div className="p-4 border-b border-white/10 flex items-center justify-between">
                                     <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Question Navigator</p>
                                     <button onClick={() => setSidebarOpen(false)} className="p-1 rounded-lg hover:bg-[#15151a]">
                                         <X className="w-5 h-5 text-gray-400" />
@@ -384,13 +384,13 @@ export default function QuizPage() {
                                 {/* Section badge + Q number */}
                                 <div className="flex items-center gap-2 mb-4">
                                     {currentQ.section_name && (
-                                        <span className="px-2.5 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase tracking-wider">
+                                        <span className="px-2.5 py-1 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full text-xs font-bold uppercase tracking-wider">
                                             {currentQ.section_name}
                                         </span>
                                     )}
                                     <span className="text-xs text-gray-400 font-medium">Question {currentIdx + 1} of {questions.length}</span>
                                     {reviewMarked.has(currentQ.id) && (
-                                        <span className="px-2 py-0.5 bg-amber-50 text-amber-600 rounded-full text-[10px] font-bold">MARKED FOR REVIEW</span>
+                                        <span className="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-[10px] font-bold">MARKED FOR REVIEW</span>
                                     )}
                                 </div>
 
@@ -411,13 +411,13 @@ export default function QuizPage() {
                                                 type="button"
                                                 onClick={() => handleAnswer(idx)}
                                                 className={`w-full text-left p-4 rounded-xl border-2 transition-all flex items-center gap-4 group active:scale-[0.99] ${selected
-                                                    ? 'border-blue-500 bg-blue-50 shadow-md'
-                                                    : 'border-white/10 bg-[#0d0d12] hover:border-blue-300 hover:bg-blue-50/40'}`}
+                                                    ? 'border-blue-500 bg-blue-500/10 shadow-lg shadow-blue-500/5'
+                                                    : 'border-white/10 bg-[#0d0d12] hover:border-blue-500/30 hover:bg-white/5'}`}
                                             >
                                                 <span className={`shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-all pointer-events-none ${selected ? 'border-blue-500 bg-blue-500 text-white' : 'border-white/20 text-gray-400 group-hover:border-blue-400'}`}>
                                                     {String.fromCharCode(65 + idx)}
                                                 </span>
-                                                <span className={`text-sm md:text-base font-medium flex-1 pointer-events-none ${selected ? 'text-blue-700' : 'text-gray-200'}`}>{opt}</span>
+                                                <span className={`text-sm md:text-base font-medium flex-1 pointer-events-none ${selected ? 'text-blue-200' : 'text-gray-200'}`}>{opt}</span>
                                                 {selected && <CheckCircle2 className="w-5 h-5 text-blue-500 shrink-0 pointer-events-none" />}
                                             </button>
                                         )
@@ -436,7 +436,7 @@ export default function QuizPage() {
 
                                     <button
                                         onClick={toggleReview}
-                                        className={`flex items-center gap-2 px-5 py-2.5 rounded-xl border-2 font-medium text-sm transition-all ${reviewMarked.has(currentQ.id) ? 'border-amber-400 bg-amber-50 text-amber-600' : 'border-white/10 text-gray-300 hover:border-amber-300 hover:bg-amber-50/50'}`}
+                                        className={`flex items-center gap-2 px-5 py-2.5 rounded-xl border-2 font-medium text-sm transition-all ${reviewMarked.has(currentQ.id) ? 'border-amber-500/30 bg-amber-500/10 text-amber-400' : 'border-white/10 text-gray-300 hover:border-amber-500/20 hover:bg-amber-500/5'}`}
                                     >
                                         {reviewMarked.has(currentQ.id) ? <BookmarkCheck className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}
                                         {reviewMarked.has(currentQ.id) ? 'Marked' : 'Mark for Review'}
@@ -480,7 +480,7 @@ export default function QuizPage() {
 
                             <button
                                 onClick={toggleReview}
-                                className={`p-3 rounded-xl border-2 transition-all ${reviewMarked.has(currentQ.id) ? 'border-amber-400 bg-amber-50 text-amber-600' : 'border-white/10 text-gray-400'}`}
+                                className={`p-3 rounded-xl border-2 transition-all ${reviewMarked.has(currentQ.id) ? 'border-amber-500/30 bg-amber-500/10 text-amber-400' : 'border-white/10 text-gray-400 active:bg-white/5'}`}
                             >
                                 {reviewMarked.has(currentQ.id) ? <BookmarkCheck className="w-5 h-5" /> : <Bookmark className="w-5 h-5" />}
                             </button>
@@ -548,8 +548,8 @@ export default function QuizPage() {
                                 className="bg-[#0d0d12] rounded-2xl shadow-2xl max-w-sm w-full p-6"
                             >
                                 <div className="text-center mb-5">
-                                    <div className="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-3">
-                                        <Send className="w-6 h-6 text-blue-600" />
+                                    <div className="w-14 h-14 bg-blue-500/15 rounded-full flex items-center justify-center mx-auto mb-3">
+                                        <Send className="w-6 h-6 text-blue-400" />
                                     </div>
                                     <h3 className="text-lg font-bold text-gray-100">Submit Exam?</h3>
                                     <p className="text-sm text-gray-400 mt-1">This action cannot be undone.</p>
@@ -578,7 +578,7 @@ export default function QuizPage() {
                                 <div className="flex gap-3">
                                     <button
                                         onClick={() => setShowConfirm(false)}
-                                        className="flex-1 py-3 rounded-xl border-2 border-white/10 text-gray-300 font-semibold text-sm hover:bg-[#050505] transition-colors"
+                                        className="flex-1 py-3 rounded-xl border-2 border-white/10 text-gray-300 font-semibold text-sm hover:bg-white/5 transition-all"
                                     >
                                         Continue
                                     </button>

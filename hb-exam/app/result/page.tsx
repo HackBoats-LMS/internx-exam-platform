@@ -145,26 +145,26 @@ export default function ResultPage() {
                 
                 .rs-subtitle strong { color: #ffffff; font-weight: 700; }
 
-                .rs-info-card {
+                 .rs-info-card {
                     width: 100%;
                     display: flex; align-items: center; gap: 1.25rem;
                     padding: 1.5rem;
                     border-radius: 20px;
-                    background: #0d0d12;
-                    border: 1px solid rgba(255,255,255,0.1);
+                    background: rgba(255,255,255,0.02);
+                    border: 1px solid rgba(255,255,255,0.06);
+                    backdrop-filter: blur(12px);
                     margin-bottom: 1rem;
-                    transition: all 0.3s ease;
-                    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
                 }
                 .rs-info-card:hover { 
-                    border-color: rgba(220,38,38,0.4); 
-                    background: rgba(220,38,38,0.05);
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                    border-color: rgba(220,38,38,0.3); 
+                    background: rgba(220,38,38,0.02);
+                    box-shadow: 0 10px 25px rgba(220,38,38,0.06), 0 0 15px rgba(220,38,38,0.02);
                 }
-
+ 
                 .rs-info-icon-box {
                     width: 48px; height: 48px; border-radius: 14px;
-                    background: #15151a;
                     display: flex; align-items: center; justify-content: center;
                     flex-shrink: 0;
                 }
@@ -222,7 +222,7 @@ export default function ResultPage() {
                     </p>
 
                     <div className="rs-info-card" style={{ animationDelay: '0.1s' }}>
-                        <div className="rs-info-icon-box" style={{ color: '#60a5fa' }}>
+                        <div className="rs-info-icon-box" style={{ color: '#60a5fa', background: 'rgba(96,165,250,0.12)', border: '1px solid rgba(96,165,250,0.2)' }}>
                             <Shield size={24} strokeWidth={2} />
                         </div>
                         <div className="rs-info-text">
@@ -232,7 +232,7 @@ export default function ResultPage() {
                     </div>
 
                     <div className="rs-info-card" style={{ animationDelay: '0.2s' }}>
-                        <div className="rs-info-icon-box" style={{ color: '#34d399' }}>
+                        <div className="rs-info-icon-box" style={{ color: '#34d399', background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.2)' }}>
                             <Clock size={24} strokeWidth={2} />
                         </div>
                         <div className="rs-info-text">
