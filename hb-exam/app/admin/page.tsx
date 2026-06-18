@@ -31,6 +31,7 @@ import {
     changeAdminPassword
 } from '../actions'
 import { signOut } from 'next-auth/react'
+import { Footer } from '@/components/footer'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type QView = 'sets' | 'set' | 'section'
@@ -554,10 +555,11 @@ export default function AdminDashboard() {
                                     </button>
                                 ))}
                             </nav>
-                            <div className="p-4 border-t border-white/10">
+                            <div className="p-4 border-t border-white/10 flex flex-col gap-3">
                                 <Button variant="ghost" className="w-full justify-start text-gray-400 hover:text-red-400 hover:bg-red-500/10 text-sm h-9 px-2" onClick={handleLogout}>
                                     <LogOut className="w-4 h-4 mr-3" /> Sign Out
                                 </Button>
+                                <Footer className="pt-2 border-t border-white/5" />
                             </div>
                         </motion.div>
                     </>
@@ -584,10 +586,11 @@ export default function AdminDashboard() {
                         </button>
                     ))}
                 </nav>
-                <div className="p-4 border-t border-white/10">
+                <div className="p-4 border-t border-white/10 flex flex-col gap-3">
                     <Button variant="ghost" className="w-full justify-start text-gray-400 hover:text-red-400 hover:bg-red-500/10 text-sm h-9 px-2" onClick={handleLogout}>
                         <LogOut className="w-4 h-4 mr-3" /> Sign Out
                     </Button>
+                    <Footer className="pt-2 border-t border-white/5" />
                 </div>
             </div>
 

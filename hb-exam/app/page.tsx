@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Loader2, ArrowRight, ShieldCheck, Clock, BarChart2, Users, FileText, CheckCircle2, Bell, LayoutGrid, FilePlus, Settings, PieChart, Activity, Lock } from 'lucide-react'
 import { getProfile, checkExamStatus } from '@/app/actions'
 import { signIn, useSession } from 'next-auth/react'
+import { Footer } from '@/components/footer'
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
@@ -606,10 +607,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <footer className="ix-footer">
-          <span className="ix-footer-text">Powered by</span>
-          <img src="/hackboats-logo.png" alt="HackBoats" className="ix-footer-logo" />
-        </footer>
+        <Footer />
       </div>
     </>
   )
