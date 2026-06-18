@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import JSConfetti from 'js-confetti'
 import { getResult, getProfile } from '@/app/actions'
 import { useSession, signOut } from 'next-auth/react'
+import { Footer } from '@/components/footer'
 
 export default function ResultPage() {
     const [loading, setLoading] = useState(true)
@@ -81,7 +82,7 @@ export default function ResultPage() {
                     justify-content: center;
                     background: #030303;
                     position: relative;
-                    overflow: hidden;
+                    overflow-x: hidden;
                     -webkit-font-smoothing: antialiased;
                     color: #ffffff;
                 }
@@ -206,50 +207,51 @@ export default function ResultPage() {
             <div className="rs-grain" aria-hidden />
 
             <div className="rs-page">
-                <div className="rs-content">
+                <div className="flex-1 flex items-center justify-center w-full px-4 relative z-10">
+                    <div className="rs-content">
 
-                    <div className="rs-icon-box">
-                        <CheckCircle2 size={36} strokeWidth={2.5} />
+                        <div className="rs-icon-box">
+                            <CheckCircle2 size={36} strokeWidth={2.5} />
+                        </div>
+
+                        <h1 className="rs-heading">
+                            Assessment<br />Complete<span style={{ color: '#dc2626' }}>.</span>
+                        </h1>
+
+                        <p className="rs-subtitle">
+                            Your session has been securely logged.<br />
+                            Thank you for your time, <strong>{profile?.fullName || 'Student'}</strong>.
+                        </p>
+
+                        <div className="rs-info-card" style={{ animationDelay: '0.1s' }}>
+                            <div className="rs-info-icon-box" style={{ color: '#60a5fa', background: 'rgba(96,165,250,0.12)', border: '1px solid rgba(96,165,250,0.2)' }}>
+                                <Shield size={24} strokeWidth={2} />
+                            </div>
+                            <div className="rs-info-text">
+                                <h4>Authentication Record</h4>
+                                <p>{profile?.rollNo || 'N/A'}</p>
+                            </div>
+                        </div>
+
+                        <div className="rs-info-card" style={{ animationDelay: '0.2s' }}>
+                            <div className="rs-info-icon-box" style={{ color: '#34d399', background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.2)' }}>
+                                <Clock size={24} strokeWidth={2} />
+                            </div>
+                            <div className="rs-info-text">
+                                <h4>Session Status</h4>
+                                <p>{result.status}</p>
+                            </div>
+                        </div>
+
+                        <button className="rs-btn" onClick={handleLogout}>
+                            <LogOut size={20} strokeWidth={2.5} /> Confirm & Sign Out
+                        </button>
+
+                        <p className="text-center text-[10px] text-gray-500 font-mono mt-4">REF: {result._id}</p>
                     </div>
-
-                    <h1 className="rs-heading">
-                        Assessment<br />Complete<span style={{ color: '#dc2626' }}>.</span>
-                    </h1>
-
-                    <p className="rs-subtitle">
-                        Your session has been securely logged.<br />
-                        Thank you for your time, <strong>{profile?.fullName || 'Student'}</strong>.
-                    </p>
-
-                    <div className="rs-info-card" style={{ animationDelay: '0.1s' }}>
-                        <div className="rs-info-icon-box" style={{ color: '#60a5fa', background: 'rgba(96,165,250,0.12)', border: '1px solid rgba(96,165,250,0.2)' }}>
-                            <Shield size={24} strokeWidth={2} />
-                        </div>
-                        <div className="rs-info-text">
-                            <h4>Authentication Record</h4>
-                            <p>{profile?.rollNo || 'N/A'}</p>
-                        </div>
-                    </div>
-
-                    <div className="rs-info-card" style={{ animationDelay: '0.2s' }}>
-                        <div className="rs-info-icon-box" style={{ color: '#34d399', background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.2)' }}>
-                            <Clock size={24} strokeWidth={2} />
-                        </div>
-                        <div className="rs-info-text">
-                            <h4>Session Status</h4>
-                            <p>{result.status}</p>
-                        </div>
-                    </div>
-
-                    <button className="rs-btn" onClick={handleLogout}>
-                        <LogOut size={20} strokeWidth={2.5} /> Confirm & Sign Out
-                    </button>
-
                 </div>
 
-                <div className="rs-footer">
-                    EXAM_REF: {result._id}
-                </div>
+                <Footer />
             </div>
         </>
     )

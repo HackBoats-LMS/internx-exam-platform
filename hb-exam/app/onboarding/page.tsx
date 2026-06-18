@@ -13,6 +13,7 @@ import { ArrowRight, Loader2, ShieldCheck, Timer, AlertCircle, CheckCircle2, Use
 import { toast } from 'sonner'
 import { upsertProfile, getColleges, getDepartments, checkExamStatus } from '@/app/actions'
 import { useSession } from 'next-auth/react'
+import { Footer } from '@/components/footer'
 
 const schema = z.object({
     fullName: z.string().min(2, 'Name is required'),
@@ -545,6 +546,7 @@ export default function OnboardingPage() {
                     )}
 
                 </div>
+                <Footer className="mt-12 max-w-[680px]" />
             </div>
 
             <style>{`

@@ -113,3 +113,38 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--muted-foreground) / 0.5);
 }
+
+/* Global Footer Styles */
+.ix-footer {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.5rem 1.5rem;
+  margin-top: auto;
+  border-top: 1px solid rgba(255,255,255,0.03);
+  width: 100%;
+  box-sizing: border-box;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.ix-footer:hover {
+  opacity: 0.95;
+}
+
+.ix-footer-text {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ix-footer-logo {
+  height: 20px;
+  width: auto;
+  object-fit: contain;
+}

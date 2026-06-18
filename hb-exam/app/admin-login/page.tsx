@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/card'
 import { Lock, Mail, Loader2, ArrowLeft } from 'lucide-react'
 import { toast } from 'sonner'
 import Link from 'next/link'
+import { Footer } from '@/components/footer'
 
 export default function AdminLoginPage() {
     const [isLoading, setIsLoading] = useState(false)
@@ -41,13 +42,14 @@ export default function AdminLoginPage() {
 
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[#050505] p-4 relative overflow-hidden">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-[#050505] p-4 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
                 <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-red-600/20 rounded-full blur-3xl" />
                 <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-red-500/10 rounded-full blur-3xl" />
             </div>
 
-            <Card className="w-full max-w-md relative z-10 animate-fade-in border-0 shadow-2xl shadow-red-900/10 bg-[#0d0d12]">
+            <div className="flex-1 flex items-center justify-center w-full max-w-md relative z-10">
+                <Card className="w-full animate-fade-in border-0 shadow-2xl shadow-red-900/10 bg-[#0d0d12]">
                 <div className="p-4">
                     <Link href="/" className="text-gray-400 hover:text-gray-300 flex items-center text-sm transition-colors">
                         <ArrowLeft className="w-4 h-4 mr-1" /> Back to Student Login
@@ -111,6 +113,9 @@ export default function AdminLoginPage() {
                     </form>
                 </div>
             </Card>
+            </div>
+
+            <Footer className="mt-8 max-w-md w-full relative z-10" />
         </div>
     )
 }
