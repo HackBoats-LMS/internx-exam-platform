@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Loader2, ArrowRight, ShieldCheck, Clock, BarChart2, Users, FileText, CheckCircle2, Bell, LayoutGrid, FilePlus, Settings, PieChart, Activity, Lock } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { getProfile, checkExamStatus } from '@/app/actions'
 import { signIn, useSession } from 'next-auth/react'
 import { Footer } from '@/components/footer'
+import Threads from '@/components/ui/Threads'
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
@@ -33,59 +34,24 @@ export default function LoginPage() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
         html, body {
           margin: 0; padding: 0;
-          background-color: #030303;
+          background-color: #000000;
           color: #ffffff;
           font-family: 'Inter', sans-serif;
           -webkit-font-smoothing: antialiased;
+          overflow-x: hidden;
         }
 
         .ix-page {
           min-height: 100vh;
           display: flex;
           flex-direction: column;
-          overflow-x: hidden;
-          background: #030303;
+          background: #000000;
           position: relative;
-        }
-
-        /* Abstract Background Elements */
-        .ix-bg-glow {
-          position: absolute;
-          top: 0; right: 0;
-          width: 800px; height: 800px;
-          background: radial-gradient(circle at 70% 30%, rgba(220, 20, 40, 0.25) 0%, rgba(0,0,0,0) 60%);
-          pointer-events: none;
-          z-index: 0;
-        }
-        .ix-bg-lines {
-          position: absolute;
-          top: -100px; right: -100px;
-          width: 900px; height: 900px;
-          border: 1px solid rgba(255,255,255,0.03);
-          border-radius: 50%;
-          pointer-events: none;
-          z-index: 0;
-        }
-        .ix-bg-lines::before {
-          content: ''; position: absolute; inset: 100px;
-          border: 1px solid rgba(255,255,255,0.02); border-radius: 50%;
-        }
-        .ix-bg-lines::after {
-          content: ''; position: absolute; inset: 200px;
-          border: 1px solid rgba(255,255,255,0.01); border-radius: 50%;
-        }
-        .ix-dots {
-          position: absolute;
-          top: 80px; right: 40px;
-          width: 80px; height: 80px;
-          background-image: radial-gradient(rgba(220, 20, 40, 0.5) 2px, transparent 2px);
-          background-size: 16px 16px;
-          z-index: 0;
-          opacity: 0.5;
+          box-sizing: border-box;
         }
 
         /* Navbar */
@@ -94,520 +60,258 @@ export default function LoginPage() {
           z-index: 50;
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          padding: 1.5rem 4rem;
+          padding: 2.5rem 4rem 1rem;
           max-width: 1400px;
           margin: 0 auto;
           width: 100%;
           box-sizing: border-box;
         }
-        .ix-nav-logo { height: 32px; }
-        .ix-nav-link {
-          color: #d1d5db;
-          font-size: 0.9rem;
-          font-weight: 500;
-          text-decoration: none;
-          transition: color 0.2s;
-          cursor: pointer;
-        }
-        .ix-nav-link:hover { color: #ffffff; }
-        .ix-nav-right { display: flex; align-items: center; gap: 2rem; }
-        .ix-btn-red {
-          background: #dc2626;
-          color: #fff;
-          border: none;
-          padding: 0.6rem 1.5rem;
-          border-radius: 6px;
-          font-weight: 600;
-          font-size: 0.9rem;
-          cursor: pointer;
-          transition: background 0.2s;
-          display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-        }
-        .ix-btn-red:hover { background: #b91c1c; }
-        .ix-btn-text-desktop { display: inline; }
-        .ix-btn-text-mobile { display: none; }
-
-        /* Footer styling */
-        .ix-footer {
-          position: relative;
-          z-index: 10;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.75rem;
-          padding: 2.5rem 2rem;
-          margin-top: auto;
-          border-top: 1px solid rgba(255,255,255,0.03);
-          width: 100%;
-          box-sizing: border-box;
-          opacity: 0.6;
-          transition: opacity 0.3s;
-        }
-        .ix-footer:hover {
-          opacity: 0.95;
-        }
-        .ix-footer-text {
-          font-size: 0.8rem;
-          color: #9ca3af;
-          font-weight: 500;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-        }
-        .ix-footer-logo {
-          height: 26px;
-          width: auto;
+        .ix-nav-logo {
+          height: 36px;
           object-fit: contain;
         }
 
-        /* Hero */
+        /* Hero Layout */
         .ix-hero {
           position: relative;
           z-index: 10;
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 4rem;
-          max-width: 1400px;
-          margin: 4rem auto;
-          padding: 0 4rem;
+          gap: 2rem;
+          max-width: 1300px;
+          margin: auto auto;
+          padding: 2rem 4rem 8rem;
           width: 100%;
           box-sizing: border-box;
           align-items: center;
         }
 
-        /* Hero Left */
+        /* Hero Left Column */
         .ix-hero-left {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
+          z-index: 10;
         }
-        .ix-pill {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.35rem 1rem;
-          border: 1px solid rgba(255,255,255,0.15);
-          border-radius: 100px;
-          font-size: 0.75rem;
-          font-weight: 600;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-          color: #e5e7eb;
-          margin-bottom: 2rem;
-        }
-        .ix-pill-dot { width: 6px; height: 6px; border-radius: 50%; background-color: #ef4444; }
         .ix-h1 {
           font-size: clamp(3rem, 5vw, 4.5rem);
           font-weight: 800;
           line-height: 1.1;
-          letter-spacing: -0.02em;
+          letter-spacing: -0.03em;
           margin: 0 0 1.5rem;
+          color: #ffffff;
         }
-        .ix-text-red { color: #dc2626; }
+        .ix-text-red {
+          color: #dc2626; /* Vibrant red */
+        }
         .ix-subtitle {
-          font-size: 1.15rem;
-          color: #9ca3af;
-          line-height: 1.6;
-          max-width: 500px;
-          margin: 0 0 2.5rem;
+          font-size: clamp(1.1rem, 2vw, 1.35rem);
+          color: #9ca3af; /* Muted grey */
+          line-height: 1.5;
+          margin: 0 0 3rem;
+          font-weight: 400;
         }
-        .ix-cta-group {
-          display: flex;
-          align-items: center;
-          gap: 1.5rem;
-          margin-bottom: 3rem;
-        }
-        .ix-btn-large {
-          padding: 0.9rem 2rem;
-          font-size: 1.05rem;
-          border-radius: 8px;
-        }
-        
-        .ix-trust-badges {
-          display: flex;
-          align-items: center;
-          gap: 1.5rem;
-          background: rgba(255,255,255,0.02);
-          border: 1px solid rgba(255,255,255,0.05);
-          padding: 1rem 1.5rem;
-          border-radius: 8px;
-        }
-        .ix-badge { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #d1d5db; font-weight: 500; }
-        .ix-badge-dot { color: #ef4444; font-size: 1.2rem; line-height: 0; }
 
-        /* Mock Dashboard (Right Side) */
+        /* Google Login Button */
+        .ix-google-btn {
+          background: rgba(13, 13, 18, 0.65);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(220, 38, 38, 0.4);
+          color: #ffffff;
+          padding: 1.1rem 2.2rem;
+          border-radius: 12px;
+          font-weight: 600;
+          font-size: 1.1rem;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.85rem;
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+        .ix-google-btn:hover {
+          border-color: rgba(220, 38, 38, 0.95);
+          background: rgba(220, 38, 38, 0.08);
+          box-shadow: 0 0 25px rgba(220, 38, 38, 0.25);
+          transform: translateY(-2px);
+        }
+        .ix-google-btn:active {
+          transform: translateY(0);
+        }
+        .ix-google-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+          transform: none;
+        }
+
+        /* Google Icon */
+        .ix-google-icon {
+          width: 24px;
+          height: 24px;
+          flex-shrink: 0;
+        }
+
+        /* Hero Right Column */
         .ix-hero-right {
-          position: relative;
-          perspective: 1500px;
-          transform-style: preserve-3d;
-        }
-        .ix-dashboard {
-          background: #0d0d12;
-          border: 1px solid rgba(255,255,255,0.1);
-          border-radius: 16px;
-          width: 100%;
-          min-height: 480px;
-          transform: rotateY(-12deg) rotateX(4deg) translateZ(0);
-          box-shadow: -20px 30px 60px rgba(0,0,0,0.6), 0 0 40px rgba(220, 20, 40, 0.15);
           display: flex;
-          overflow: hidden;
-        }
-        
-        /* Dashboard Sidebar */
-        .ix-dash-sidebar {
-          width: 60px;
-          border-right: 1px solid rgba(255,255,255,0.05);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding: 1.5rem 0;
-          gap: 1.5rem;
-          background: #0a0a0e;
-        }
-        .ix-dash-sidebar-icon { color: #6b7280; width: 20px; height: 20px; }
-        .ix-dash-sidebar-icon.active { color: #dc2626; background: rgba(220,38,38,0.15); padding: 8px; border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
-
-        /* Dashboard Main */
-        .ix-dash-main {
-          flex: 1;
-          padding: 1.5rem;
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-        }
-        .ix-dash-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-        .ix-dash-title { font-size: 1.1rem; font-weight: 600; color: #fff; margin: 0; }
-        .ix-dash-profile { display: flex; align-items: center; gap: 1rem; color: #9ca3af; }
-        .ix-avatar { width: 28px; height: 28px; border-radius: 50%; background: #dc2626; }
-
-        /* Dashboard Stats */
-        .ix-dash-stats {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 1rem;
-        }
-        .ix-stat-card {
-          background: #15151a;
-          border: 1px solid rgba(255,255,255,0.04);
-          border-radius: 12px;
-          padding: 1rem;
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-        .ix-stat-label { font-size: 0.7rem; color: #9ca3af; font-weight: 500; }
-        .ix-stat-row { display: flex; justify-content: space-between; align-items: flex-end; }
-        .ix-stat-value { font-size: 1.4rem; font-weight: 700; color: #fff; line-height: 1; }
-        .ix-stat-icon { color: #dc2626; width: 16px; height: 16px; }
-
-        /* Dashboard Bottom Section */
-        .ix-dash-bottom {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1rem;
-          flex: 1;
-        }
-        .ix-dash-panel {
-          background: #15151a;
-          border: 1px solid rgba(255,255,255,0.04);
-          border-radius: 12px;
-          padding: 1.25rem;
-          display: flex;
-          flex-direction: column;
-        }
-        .ix-panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-        .ix-panel-title { font-size: 0.85rem; font-weight: 600; color: #fff; margin: 0; }
-        .ix-panel-link { font-size: 0.7rem; color: #9ca3af; }
-        
-        .ix-exam-list { display: flex; flex-direction: column; gap: 0.75rem; }
-        .ix-exam-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .ix-exam-item:last-child { border-bottom: none; padding-bottom: 0; }
-        .ix-exam-info { display: flex; align-items: flex-start; gap: 0.75rem; }
-        .ix-exam-icon { width: 24px; height: 24px; background: rgba(255,255,255,0.05); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #9ca3af; }
-        .ix-exam-name { font-size: 0.8rem; font-weight: 500; color: #fff; margin: 0 0 0.2rem; }
-        .ix-exam-meta { font-size: 0.65rem; color: #6b7280; margin: 0; }
-        .ix-exam-status { font-size: 0.65rem; color: #10b981; background: rgba(16,185,129,0.1); padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 500; }
-
-        /* Chart Area */
-        .ix-chart-area {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
           justify-content: flex-end;
-          position: relative;
-        }
-        .ix-chart-svg { width: 100%; height: 100px; }
-        .ix-chart-labels { display: flex; justify-content: space-between; font-size: 0.6rem; color: #6b7280; margin-top: 0.5rem; }
-        .ix-chart-stat { position: absolute; top: 10px; right: 10px; text-align: right; }
-        .ix-chart-stat-val { font-size: 1.1rem; font-weight: 700; color: #fff; }
-        .ix-chart-stat-lbl { font-size: 0.65rem; color: #9ca3af; }
-
-        /* Bottom Features */
-        .ix-features {
-          position: relative;
-          z-index: 10;
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 2rem;
-          max-width: 1400px;
-          margin: 0 auto 4rem;
-          padding: 3rem 4rem;
-          background: rgba(10, 10, 15, 0.4);
-          border-top: 1px solid rgba(255,255,255,0.05);
-          border-bottom: 1px solid rgba(255,255,255,0.05);
-          width: 100%;
-          box-sizing: border-box;
-        }
-        .ix-feature {
-          display: flex;
-          flex-direction: column;
           align-items: center;
-          text-align: center;
+          position: relative;
         }
-        .ix-f-icon {
-          width: 50px; height: 50px;
-          border-radius: 50%;
-          background: rgba(220, 38, 38, 0.05);
-          border: 1px solid rgba(220, 38, 38, 0.2);
-          display: flex; align-items: center; justify-content: center;
-          color: #ef4444;
-          margin-bottom: 1.25rem;
+        .ix-illustration-container {
+          position: relative;
+          width: 100%;
+          max-width: 620px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
-        .ix-f-title { font-size: 1.05rem; font-weight: 600; color: #fff; margin: 0 0 0.5rem; }
-        .ix-f-desc { font-size: 0.85rem; color: #9ca3af; line-height: 1.5; margin: 0; }
+        .ix-illustration-img {
+          width: 100%;
+          height: auto;
+          object-fit: contain;
+          z-index: 10;
+        }
+        .ix-red-glow {
+          position: absolute;
+          width: 80%;
+          height: 80%;
+          background: radial-gradient(circle, rgba(220, 38, 38, 0.22) 0%, rgba(0, 0, 0, 0) 70%);
+          z-index: 0;
+          pointer-events: none;
+        }
 
+        /* Bottom Waves */
+        .ix-waves-wrapper {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 320px;
+          overflow: hidden;
+          pointer-events: auto;
+          z-index: 1;
+        }
+        .ix-waves-svg {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          height: 100%;
+        }
+
+        /* Responsive Breakpoints */
         @media (max-width: 1024px) {
-          .ix-nav { padding: 1.25rem 2rem; }
-          .ix-hero { grid-template-columns: 1fr; gap: 3.5rem; padding: 0 2rem; margin: 3rem auto; }
-          .ix-hero-left { align-items: center; text-align: center; }
-          .ix-subtitle { margin: 0 auto 2.5rem; }
-          .ix-cta-group { justify-content: center; }
-          .ix-trust-badges { justify-content: center; width: 100%; box-sizing: border-box; }
-          .ix-dashboard { transform: rotateY(-4deg) rotateX(1deg) translateZ(0); box-shadow: -10px 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(220,20,40,0.08); }
-          .ix-btn-text-desktop { display: none; }
-          .ix-btn-text-mobile { display: inline; }
+          .ix-nav {
+            padding: 2rem 2.5rem 1rem;
+          }
+          .ix-hero {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            padding: 4.5rem 2.5rem 2rem;
+            margin: auto auto;
+            text-align: center;
+          }
+          .ix-hero-left {
+            align-items: center;
+          }
+          .ix-hero-right {
+            justify-content: center;
+            margin-top: -1.5rem;
+          }
+          .ix-illustration-container {
+            max-width: 500px;
+          }
+          .ix-waves-wrapper {
+            height: 280px;
+          }
         }
 
-        @media (max-width: 768px) {
-          .ix-features { grid-template-columns: 1fr 1fr; padding: 2rem; gap: 2.5rem 1.5rem; }
-          .ix-dash-stats { grid-template-columns: repeat(2, 1fr); }
-          .ix-dash-bottom { grid-template-columns: 1fr; }
-          .ix-bg-glow, .ix-bg-lines, .ix-dots { display: none; }
-        }
-
-        @media (max-width: 580px) {
-          .ix-nav { padding: 1rem 1.25rem; }
-          .ix-nav-link { display: none; }
-          .ix-nav-right { gap: 1rem; }
-          .ix-hero { gap: 2.5rem; padding: 0 1.25rem; margin: 2rem auto; }
-          .ix-h1 { font-size: 2.75rem; }
-          .ix-subtitle { font-size: 1rem; margin-bottom: 2rem; }
-          .ix-cta-group { margin-bottom: 2.5rem; width: 100%; }
-          .ix-btn-large { width: 100%; }
-          .ix-trust-badges { flex-direction: column; align-items: center; gap: 0.75rem; padding: 1rem; }
-          .ix-badge-dot { display: none; }
-          .ix-dash-sidebar { display: none; }
-          .ix-dash-main { padding: 1rem; }
-          .ix-features { grid-template-columns: 1fr; padding: 2.5rem 1.5rem; gap: 2rem; }
+        @media (max-width: 640px) {
+          .ix-nav {
+            padding: 1.5rem 1.5rem 1rem;
+          }
+          .ix-hero {
+            padding: 3.5rem 1.5rem 1.5rem;
+            gap: 1rem;
+          }
+          .ix-hero-right {
+            margin-top: -2.2rem;
+          }
+          .ix-h1 {
+            font-size: clamp(2.2rem, 8vw, 3rem);
+          }
+          .ix-subtitle {
+            margin-bottom: 2.2rem;
+          }
+          .ix-google-btn {
+            width: 100%;
+            padding: 1rem 1.8rem;
+            font-size: 1rem;
+          }
+          .ix-waves-wrapper {
+            height: 240px;
+          }
         }
       `}</style>
 
       <div className="ix-page">
-        <div className="ix-bg-glow" />
-        <div className="ix-bg-lines" />
-        <div className="ix-dots" />
-
+        {/* Top Navbar */}
         <nav className="ix-nav">
           <img src="/internx-logo-white.png" alt="InternX" className="ix-nav-logo" />
-          <div className="ix-nav-right">
-            <span className="ix-nav-link" onClick={loginGoogle}>Login</span>
-            <button className="ix-btn-red" onClick={loginGoogle} disabled={isLoading}>
-              {isLoading ? <Loader2 size={16} className="animate-spin" /> : null}
-              <span className="ix-btn-text-desktop">Continue with Google</span>
-              <span className="ix-btn-text-mobile">Get started</span>
-            </button>
-          </div>
         </nav>
 
+        {/* Hero Section */}
         <main className="ix-hero">
           <div className="ix-hero-left">
-            <div className="ix-pill">
-              <span className="ix-pill-dot" /> EXAM PLATFORM
-            </div>
-            
             <h1 className="ix-h1">
-              Exam Smarter.<br/>
-              <span className="ix-text-red">Achieve More.</span>
+              Every attempt<br />
+              is a <span className="ix-text-red">step forward.</span>
             </h1>
-            
-            <p className="ix-subtitle">
-              Create, conduct and analyze exams with a secure platform built for modern teams.
-            </p>
-            
-            <div className="ix-cta-group">
-              <button className="ix-btn-red ix-btn-large" onClick={loginGoogle} disabled={isLoading}>
-                {isLoading ? <Loader2 size={18} className="animate-spin" /> : 'Continue with Google'} <ArrowRight size={18} />
-              </button>
-            </div>
 
-            <div className="ix-trust-badges">
-              <div className="ix-badge"><ShieldCheck size={16} /> Secure & Reliable</div>
-              <span className="ix-badge-dot">·</span>
-              <div className="ix-badge"><Lock size={16} /> Anti-Cheating</div>
-              <span className="ix-badge-dot">·</span>
-              <div className="ix-badge"><PieChart size={16} /> Real-time Insights</div>
-            </div>
+            <p className="ix-subtitle">
+              Access assessments through<br />your InternX account.
+            </p>
+
+            <button className="ix-google-btn" onClick={loginGoogle} disabled={isLoading}>
+              {isLoading ? (
+                <Loader2 size={24} className="animate-spin text-white" />
+              ) : (
+                <svg className="ix-google-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05" />
+                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335" />
+                </svg>
+              )}
+              <span>Continue with Google</span>
+            </button>
           </div>
 
           <div className="ix-hero-right">
-            <div className="ix-dashboard">
-              <div className="ix-dash-sidebar">
-                <div className="ix-dash-sidebar-icon"><LayoutGrid size={20} /></div>
-                <div className="ix-dash-sidebar-icon active"><FileText size={20} /></div>
-                <div className="ix-dash-sidebar-icon"><Users size={20} /></div>
-                <div className="ix-dash-sidebar-icon"><Activity size={20} /></div>
-                <div className="ix-dash-sidebar-icon"><Settings size={20} /></div>
-              </div>
-              
-              <div className="ix-dash-main">
-                <div className="ix-dash-header">
-                  <h2 className="ix-dash-title">Dashboard</h2>
-                  <div className="ix-dash-profile">
-                    <Bell size={18} />
-                    <div className="ix-avatar" />
-                  </div>
-                </div>
-
-                <div className="ix-dash-stats">
-                  <div className="ix-stat-card">
-                    <span className="ix-stat-label">Exams</span>
-                    <div className="ix-stat-row">
-                      <span className="ix-stat-value">24</span>
-                      <FilePlus className="ix-stat-icon" />
-                    </div>
-                  </div>
-                  <div className="ix-stat-card">
-                    <span className="ix-stat-label">Candidates</span>
-                    <div className="ix-stat-row">
-                      <span className="ix-stat-value">1,248</span>
-                      <Users className="ix-stat-icon" />
-                    </div>
-                  </div>
-                  <div className="ix-stat-card">
-                    <span className="ix-stat-label">Average Score</span>
-                    <div className="ix-stat-row">
-                      <span className="ix-stat-value">76%</span>
-                      <PieChart className="ix-stat-icon" />
-                    </div>
-                  </div>
-                  <div className="ix-stat-card">
-                    <span className="ix-stat-label">Completion Rate</span>
-                    <div className="ix-stat-row">
-                      <span className="ix-stat-value">92%</span>
-                      <Activity className="ix-stat-icon" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="ix-dash-bottom">
-                  <div className="ix-dash-panel">
-                    <div className="ix-panel-header">
-                      <h3 className="ix-panel-title">Recent Exams</h3>
-                      <span className="ix-panel-link">View All</span>
-                    </div>
-                    <div className="ix-exam-list">
-                      <div className="ix-exam-item">
-                        <div className="ix-exam-info">
-                          <div className="ix-exam-icon"><FileText size={14} /></div>
-                          <div>
-                            <h4 className="ix-exam-name">Frontend Developer Assessment</h4>
-                            <p className="ix-exam-meta">May 15, 2024 · 120 Participants</p>
-                          </div>
-                        </div>
-                        <span className="ix-exam-status">Completed</span>
-                      </div>
-                      <div className="ix-exam-item">
-                        <div className="ix-exam-info">
-                          <div className="ix-exam-icon"><FileText size={14} /></div>
-                          <div>
-                            <h4 className="ix-exam-name">UI/UX Design Test</h4>
-                            <p className="ix-exam-meta">May 10, 2024 · 85 Participants</p>
-                          </div>
-                        </div>
-                        <span className="ix-exam-status">Completed</span>
-                      </div>
-                      <div className="ix-exam-item">
-                        <div className="ix-exam-info">
-                          <div className="ix-exam-icon"><FileText size={14} /></div>
-                          <div>
-                            <h4 className="ix-exam-name">Data Structures Quiz</h4>
-                            <p className="ix-exam-meta">May 5, 2024 · 95 Participants</p>
-                          </div>
-                        </div>
-                        <span className="ix-exam-status">Completed</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="ix-dash-panel">
-                    <div className="ix-panel-header">
-                      <h3 className="ix-panel-title">Performance Overview</h3>
-                      <span className="ix-panel-link" style={{border: '1px solid #333', padding: '2px 8px', borderRadius: '4px'}}>This Month</span>
-                    </div>
-                    <div className="ix-chart-area">
-                      <div className="ix-chart-stat">
-                        <div className="ix-chart-stat-val">76%</div>
-                        <div className="ix-chart-stat-lbl">Average Score</div>
-                      </div>
-                      <svg className="ix-chart-svg" viewBox="0 0 200 60" preserveAspectRatio="none">
-                        <defs>
-                          <linearGradient id="redGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="rgba(220,38,38,0.4)" />
-                            <stop offset="100%" stopColor="rgba(220,38,38,0)" />
-                          </linearGradient>
-                        </defs>
-                        <path d="M0,50 C20,40 40,60 60,30 C80,0 100,20 120,40 C140,60 160,20 200,10 L200,60 L0,60 Z" fill="url(#redGrad)" />
-                        <path d="M0,50 C20,40 40,60 60,30 C80,0 100,20 120,40 C140,60 160,20 200,10" fill="none" stroke="#ef4444" strokeWidth="2" />
-                      </svg>
-                      <div className="ix-chart-labels">
-                        <span>May 1</span><span>May 8</span><span>May 15</span><span>May 22</span><span>May 29</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="ix-illustration-container">
+              <div className="ix-red-glow" />
+              <img
+                src="/Kids Studying from Home-rafiki.svg"
+                alt="Student Assessment Illustration"
+                className="ix-illustration-img"
+              />
             </div>
           </div>
         </main>
 
-        <div className="ix-features">
-          <div className="ix-feature">
-            <div className="ix-f-icon"><FileText size={24} /></div>
-            <h3 className="ix-f-title">Create Exams</h3>
-            <p className="ix-f-desc">Build custom exams with various question types, sections and time limits.</p>
-          </div>
-          <div className="ix-feature">
-            <div className="ix-f-icon"><ShieldCheck size={24} /></div>
-            <h3 className="ix-f-title">Secure & Fair</h3>
-            <p className="ix-f-desc">Advanced proctoring and anti-cheating to ensure exam integrity and a fair experience.</p>
-          </div>
-          <div className="ix-feature">
-            <div className="ix-f-icon"><BarChart2 size={24} /></div>
-            <h3 className="ix-f-title">Analyze Performance</h3>
-            <p className="ix-f-desc">Get real-time results and detailed analytics to track performance and progress.</p>
-          </div>
-          <div className="ix-feature">
-            <div className="ix-f-icon"><Users size={24} /></div>
-            <h3 className="ix-f-title">Built for Teams</h3>
-            <p className="ix-f-desc">Manage candidates, roles and permissions with ease.</p>
-          </div>
+        {/* Dynamic Threads Component from React Bits */}
+        <div className="ix-waves-wrapper">
+          <Threads
+            color={[0.86, 0.15, 0.15]}
+            amplitude={1.2}
+            distance={0.3}
+            enableMouseInteraction={true}
+          />
         </div>
 
-        <Footer />
+        {/* Global Footer (HackBoats logo and details) */}
+        <Footer className="relative z-10" />
       </div>
     </>
   )
