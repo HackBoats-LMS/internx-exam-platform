@@ -188,7 +188,7 @@ export default function LoginPage() {
           bottom: 0;
           left: 0;
           right: 0;
-          height: 320px;
+          height: 420px;
           overflow: hidden;
           pointer-events: auto;
           z-index: 1;
