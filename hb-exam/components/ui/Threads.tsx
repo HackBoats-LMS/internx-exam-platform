@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Renderer, Program, Mesh, Triangle, Color } from 'ogl';
 
 import './Threads.css';
@@ -136,6 +136,7 @@ const Threads: React.FC<ThreadsProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationFrameId = useRef<number>(0);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -146,8 +147,6 @@ const Threads: React.FC<ThreadsProps> = ({
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    container.appendChild(gl.canvas);
-
     const geometry = new Triangle(gl);
     const program = new Program(gl, {
       vertex: vertexShader,
@@ -174,7 +173,23 @@ const Threads: React.FC<ThreadsProps> = ({
       program.uniforms.iResolution.value.b = clientWidth / clientHeight;
     }
     window.addEventListener('resize', resize);
+    
+    // Resize first to apply correct aspect ratio/dimensions
     resize();
+
+    // Render first frame synchronously so it isn't blank
+    program.uniforms.uMouse.value[0] = 0.5;
+    program.uniforms.uMouse.value[1] = 0.5;
+    program.uniforms.iTime.value = 0;
+    renderer.render({ scene: mesh });
+
+    // Append to container after pre-rendering is complete
+    container.appendChild(gl.canvas);
+
+    // Set ready state to trigger smooth fade-in after canvas mount
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 50);
 
     let currentMouse = [0.5, 0.5];
     let targetMouse = [0.5, 0.5];
@@ -212,6 +227,7 @@ const Threads: React.FC<ThreadsProps> = ({
     animationFrameId.current = requestAnimationFrame(update);
 
     return () => {
+      clearTimeout(timer);
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
       window.removeEventListener('resize', resize);
 
@@ -224,7 +240,7 @@ const Threads: React.FC<ThreadsProps> = ({
     };
   }, [color, amplitude, distance, enableMouseInteraction]);
 
-  return <div ref={containerRef} className="threads-container" {...rest} />;
+  return <div ref={containerRef} className={`threads-container ${isReady ? 'is-ready' : ''}`} {...rest} />;
 };
 
 export default Threads;
